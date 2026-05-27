@@ -1,0 +1,30 @@
+name: Test and Deploy Workflow
+on: push
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v5
+      - name: Install Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: 24
+      - name: Install Dependencies
+        run: npm ci
+      - name: Run Tests
+        run: npm test
+  deploy:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v5
+      - name: Install Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: 24
+      - name: Install Dependencies
+        run: npm ci
+      - name: Deploy Application
+        run: echo "Deploying application..." # Replace with actual deployment command
